@@ -1,16 +1,52 @@
-//@ts-check
-const argv = require('yargs').argv
+#!/usr/bin/env node
 const sharp = require('sharp');
 const path = require('path');
 const rimraf = require('rimraf');
 
-var input = argv.input;
-var width = argv.width;
-var height = argv.height;
-var spacer = argv.spacer || 0;
+const argv = require('yargs')
+  .usage( 'Usage: $0 <input>' )
+  .command( 'input', 'Tilemap image', { alias: 'i' } )
+  .required( 1, 'Tilemap image is required' )
+  .option('w', {
+    alias: 'width',
+    demand: false,
+    describe: 'Tile width',
+    type: 'integer',
+    default: 32
+  })
+  .option('h', {
+    alias: 'height',
+    demand: false,
+    describe: 'Tile height',
+    type: 'integer',
+    default: 32
+  })
+  .option('s', {
+    alias: 'spacer',
+    demand: false,
+    describe: 'Tilemap spacing between tiles',
+    type: 'integer',
+    default: 0
+  })
+  .option('o', {
+    alias: 'output',
+    demand: false,
+    describe: 'Output folder',
+    type: 'string',
+    default: path.join(__dirname, 'output')
+  })
+  .help('?')
+  .alias('?', 'help')
+  .example('$0 spider.png -w=64 -h=64 -o=~/Documents', 'Generate all the tiles from the tilemap')
+  .epilog('Copyright Pedro Luz <https://github.com/narven> 2018')
+  .argv
 
+const input = argv._[0];
+const width = argv.width;
+const height = argv.height;
+const spacer = argv.spacer;
+const output = argv.output;
 const image = sharp(input);
-const outputFolder = path.join(__dirname, 'output');
 
 image
   .metadata()
@@ -18,8 +54,8 @@ image
     var imageWidth = metadata.width;
     var imageHeight = metadata.height;
 
-    console.log("Image width:" + imageWidth)
-    console.log("Image height:" + imageHeight)
+    console.log('Image width', imageWidth)
+    console.log('Image height', imageHeight)
 
     for(var y = 0; y <= imageHeight; y += height) {
 
@@ -35,16 +71,18 @@ image
           height: height
         };
 
-        var file = "output-" + y + "-" + x + ".png";
-        var output = path.join(outputFolder, file);
+        var file = 'output-' + y + '-' + x + '.png';
+        var dest = path.join(output, file);
+
+        console.log(dest)
 
         image
           .extract(options)
-          .toFile(output, function(err) {
+          .toFile(dest, function(err) {
             if (err) {
-              console.log("Error: ", err.message, x, y)
+              console.log('Error: ', err.message, x, y)
             } else {
-              console.log("Splited: ", output);
+              console.log('Splited: ', dest);
             }
           });
       }

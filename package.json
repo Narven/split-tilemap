@@ -1,7 +1,13 @@
 {
-  "name": "splittilemap",
+  "name": "split-tilemap",
+  "description": "Small tool to split tilemaps into the individual images",
+  "keywords": [
+    "tilemap",
+    "image",
+    "split"
+  ],
   "version": "0.0.1",
-  "main": "index.js",
+  "main": "./index.js",
   "license": "MIT",
   "dependencies": {
     "rimraf": "^2.6.2",

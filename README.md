@@ -6,16 +6,17 @@ Small tool to split tilemaps into the individual images
 
 `yarn` or `npm install`
 
+## Help
+
+`node index.js`
+
 ## Run
 
-Args:
-* `input` - original tilemap image
-* `width` - width of each final tile, default `32`
-* `height` - height of each final tile, default `32`
-* `spacer` - any space between the tilemap tiles?, default `0`
-* `output` - output folder, default `./output`
+Minimal: `node index.js spider.png`
 
-Run `node index.js --input=spider.png --width=64 --height=64 --spacer=1`
+Specifying sizes: `node index.js spider.png -w=64 -h=64`
+
+Output folder: `node index.js spider.png -w=64 -h=64 -o=/MyHome`
 
 ## Credits
 
