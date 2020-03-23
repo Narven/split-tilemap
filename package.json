@@ -12,6 +12,6 @@
   "dependencies": {
     "rimraf": "^2.6.2",
     "sharp": "^0.20.0",
-    "yargs": "^11.0.0"
+    "yargs": "^13.1.0"
   }
 }
